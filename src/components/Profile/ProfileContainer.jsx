@@ -6,7 +6,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Profile from './Profile';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { setUserProfile, showProfileThunkCreator, updateUserStatus, getUserStatus } from '../../redux/Profile_reducer'
+import { setUserProfile, showProfileThunkCreator, updateUserStatus, getUserStatus, savePhoto, saveProfile } from '../../redux/Profile_reducer'
 import { Redirect, withRouter } from 'react-router-dom';
 import { profileAPI } from '../../api/api';
 import { withAuthRedirectComponent } from '../../hoc/withAuthRedirect'
@@ -15,25 +15,29 @@ import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
 
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId
     if (!userId) {
       userId = this.props.authorizedUserId
-      // if (!userId) {
-      //   this.props.history.push('/login')
-      // }
     }
     this.props.showProfileThunkCreator(userId)
     this.props.getUserStatus(userId)
-    // profileAPI.showProfile(userId)
-    //   .then(data => {
-    //     this.props.setUserProfile(data)
-    //   })
+  }
+
+  componentDidMount() {
+    this.refreshProfile()
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.match.params.userId != prevProps.match.params.userId) {
+      this.refreshProfile()
+    }
+
   }
 
   render() {
     return <div>
-      <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus} />
+      <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus} isOwner={!this.props.match.params.userId}
+        savePhoto={this.props.savePhoto} />
     </div>
   }
 }
@@ -48,7 +52,7 @@ let mapStateToProps = (state) => ({
 
 
 export default compose(
-  connect(mapStateToProps, { showProfileThunkCreator, getUserStatus, updateUserStatus }),
+  connect(mapStateToProps, { showProfileThunkCreator, getUserStatus, updateUserStatus, savePhoto, saveProfile }),
   withRouter,
   withAuthRedirectComponent
 )(ProfileContainer)

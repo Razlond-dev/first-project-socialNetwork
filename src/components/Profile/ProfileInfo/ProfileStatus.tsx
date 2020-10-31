@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { toggleIsFetching } from '../../../redux/Users_reducer';
 import Preloader from '../../common/preloader/preloader';
 import s from './ProfileInfo.module.css'
 
-class ProfileStatus extends React.Component {
+type propsType = {
+  status: string
+  updateUserStatus: (newStatus: string) => void
+}
+
+type stateType = {
+  editMode: boolean
+  status: string
+}
+
+class ProfileStatus extends React.Component<propsType, stateType> {
   state = {
     editMode: false,
     status: this.props.status
@@ -20,16 +30,16 @@ class ProfileStatus extends React.Component {
     })
     this.props.updateUserStatus(this.state.status)
   }
-  onStatusChange = (e) => {
+  onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       status: e.currentTarget.value
     })
 
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: propsType, prevState: stateType) {
     if (prevProps.status !== this.props.status) {
       this.setState({
-        status: this.props.state
+        status: this.props.status
       })
     }
   }

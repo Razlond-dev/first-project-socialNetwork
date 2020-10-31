@@ -17,7 +17,7 @@ const LoginForm = (props) => {
 
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field placeholder='Login' type="text" name={'email'} component={Input} validate={required} />
+        <Field placeholder='Email' type="text" name={'email'} component={Input} validate={required} />
       </div>
       <div>
         <Field placeholder='Password' type="password" name={'password'} component={Input} validate={required} />
@@ -25,10 +25,14 @@ const LoginForm = (props) => {
       <div>
         <Field type="checkbox" name={'rememberMe'} component={'input'} /> Remember me
       </div>
+
+      { props.captchaUrl && <img src={props.captchaUrl} />}
+      { props.captchaUrl && <Field placeholder='Symbols from image' name={'captcha'} component={Input} validate={required} />}
+
       {props.error
-        ? <div className={style.formSummaryError}> {props.error} </div>
-        : null
-      }
+        ? <div className='formSummaryError'> {props.error} </div>
+        : null}
+
       <div>
         <button>Login</button>
       </div>
@@ -48,21 +52,21 @@ const Login = (props) => {
   }
 
   const onSubmit = (formData) => {
-    props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
+    props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha)
   }
-
 
   return (
     <div>
       <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} />
+      <LoginReduxForm captchaUrl={props.captchaUrl} onSubmit={onSubmit} />
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
   }
 
 }

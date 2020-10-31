@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, withRouter } from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -27,8 +27,24 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 class App extends React.Component {
 
+
+
+
+
   componentDidMount() {
     this.props.initialiseApp()
+    window.addEventListener("error", function (e) {
+      console.log("Error occurred: " + e.error.message);
+      console.log('SHIT');
+      return false;
+    })
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("error", function (e) {
+      console.log("Error occurred: " + e.error.message);
+      return false;
+    })
   }
 
   render() {
@@ -44,6 +60,7 @@ class App extends React.Component {
         <Navbar />
         <Suspense fallback={<div>Loading...</div>}>
           <div className='app-wrapper-content'>
+            <Route exact path='/' render={() => <Redirect to='/profile' />} />
             <Route path='/login' render={() => <LoginPage />} />
             <Route path='/profile/:userId?' render={() => <ProfileContainer store={this.props.store} />} />
             <Route path='/dialogs' render={() => <DialogsContainer store={this.props.store} />} />
@@ -51,6 +68,7 @@ class App extends React.Component {
             <Route path='/news' render={News} />
             <Route path='/music' render={Music} />
             <Route path='/settings' render={Settings} />
+            {/* <Route path='*' render={() => <div>404 NOT FOUND </div>} /> */}
           </div>
         </Suspense>
       </div>

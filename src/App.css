@@ -57,3 +57,7 @@ a {
 .paginationUsers .pagesBreak {
   cursor: pointer;
 }
+
+.formSummaryError {
+  border: solid 2px red;
+}
