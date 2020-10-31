@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  padding-inline-start: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.app-wrapper {
+  margin: 0 auto;
+  display: grid;
+  width: 1200px;
+  grid-template-areas: 'h h' 'n c';
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+}
+
+.app-wrapper-content {
+  grid-area: c;
+  background-color: grey;
+}
+
+.app-wrapper-content img {
+  width: 100%;
+}
+
+.paginationUsers {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+/* make pagination looks better for future */
+
+.paginationUsers .btn {
+  background-color: saddlebrown;
+  cursor: pointer;
+}
+
+.paginationUsers .pages {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.paginationUsers .pagesBreak {
+  cursor: pointer;
+}

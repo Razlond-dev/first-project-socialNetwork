@@ -1,0 +1,23 @@
+.nav {
+  grid-area: n;
+  background-color: hotpink;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+.item a{
+  color: white;
+}
+
+.item a.activeLink {
+  color: gold;
+}
