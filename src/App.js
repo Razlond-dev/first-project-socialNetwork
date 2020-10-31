@@ -35,7 +35,6 @@ class App extends React.Component {
     this.props.initialiseApp()
     window.addEventListener("error", function (e) {
       console.log("Error occurred: " + e.error.message);
-      console.log('SHIT');
       return false;
     })
   }
