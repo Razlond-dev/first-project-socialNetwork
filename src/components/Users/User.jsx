@@ -3,7 +3,7 @@ import React from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/userPhoto.jpg'
 import { NavLink } from 'react-router-dom'
-import { usersAPI } from '../../api/api'
+import { usersAPI } from "../../api/usersAPI"
 import Paginatior from '../common/Paginator/Paginator'
 
 

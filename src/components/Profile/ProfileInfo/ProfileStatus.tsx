@@ -1,7 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { toggleIsFetching } from '../../../redux/Users_reducer';
-import Preloader from '../../common/preloader/preloader';
-import s from './ProfileInfo.module.css'
 
 type propsType = {
   status: string

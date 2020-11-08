@@ -8,7 +8,7 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import { setUserProfile, showProfileThunkCreator, updateUserStatus, getUserStatus, savePhoto, saveProfile } from '../../redux/Profile_reducer'
 import { Redirect, withRouter } from 'react-router-dom';
-import { profileAPI } from '../../api/api';
+import { profileAPI } from "../../api/profileAPI";
 import { withAuthRedirectComponent } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux';
 

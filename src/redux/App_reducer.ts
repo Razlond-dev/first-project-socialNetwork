@@ -1,19 +1,16 @@
 import { authMeThunkCreator } from "./Auth_reducer"
+import { inferActionsTypes } from "./redux-store"
 
-const INITIALISED_SUCCESS = 'INITIALISED_SUCCESS'
-
-
-export type initialStateType = {
-  initialised: boolean
-}
-
-let initialState: initialStateType = {
+let initialState = {
   initialised: false
 }
 
+export type initialStateType = typeof initialState
+type ActionsType = inferActionsTypes<typeof actions>
+
 const appReducer = (state = initialState, action: any): initialStateType => {
   switch (action.type) {
-    case INITIALISED_SUCCESS:
+    case 'INITIALISED_SUCCESS':
 
 
       return {
@@ -26,19 +23,18 @@ const appReducer = (state = initialState, action: any): initialStateType => {
   }
 }
 
-type initialisedSuccessActionType = {
-  type: typeof INITIALISED_SUCCESS
+const actions = {
+  initialisedSuccess: () => ({ type: 'INITIALISED_SUCCESS' } as const)
 }
 
-
-export const initialisedSuccess = (): initialisedSuccessActionType => ({ type: INITIALISED_SUCCESS })
+export const initialisedSuccess = () => ({ type: 'INITIALISED_SUCCESS' })
 
 export const initialiseApp = () => {
   return (dispatch: any) => {
     let dispatchResult = dispatch(authMeThunkCreator())
     Promise.all([dispatchResult])
       .then(() => {
-        (dispatch(initialisedSuccess()))
+        (dispatch(actions.initialisedSuccess()))
       })
   }
 }

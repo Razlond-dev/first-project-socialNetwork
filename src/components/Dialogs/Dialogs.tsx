@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Field, reduxForm } from 'redux-form'
-import { addMessageCreator, updateNewMessageTextCreator } from '../../redux/Dialogs_reducer'
+import { Field, InjectedFormProps, reduxForm } from 'redux-form'
+import { initialStateType } from '../../redux/Dialogs_reducer'
 import { maxLengthCreator, required } from '../../utils/validation/validators'
 import { formControl } from '../common/FormControls/formControls'
 import DialogItem from './DialogItem/DialogItem'
@@ -11,30 +11,36 @@ import Message from './Message/Message'
 const Textarea = formControl('textarea')
 const maxLength200 = maxLengthCreator(200)
 
-const addMessageForm = (props) => {
+const addMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType, NewMessageFormOwnProps> & NewMessageFormOwnProps> = (props) => {
   return (<form onSubmit={props.handleSubmit}>
-    <Field component={Textarea} validate={required, maxLength200} name={'newMessageText'} placeholder='Send message' />
+    <Field component={Textarea} validate={required} name={'newMessageText'} placeholder='Send message' />
     <button>Add message</button>
   </form>)
 }
 
-
-const AddMessageFormRedux = reduxForm({
+const AddMessageFormRedux = reduxForm<NewMessageFormValuesType, NewMessageFormOwnProps>({
   form: 'dialogsAddMessageForm'
 })(addMessageForm)
 
+type NewMessageFormValuesType = {
+  newMessageText: string
+}
 
-const Dialogs = (props) => {
+type NewMessageFormOwnProps = {}
+
+type OwnPropsType = {
+  dialogsPage: initialStateType
+  addMessage: (newMessageText: string) => void
+}
+
+const Dialogs: React.FC<OwnPropsType> = (props) => {
 
   let dialogsElements = props.dialogsPage.dialogs.map(dia => <DialogItem name={dia.name} key={dia.id} id={dia.id} />)
   let messagesElements = props.dialogsPage.messages.map(mes => <Message message={mes.message} key={mes.id} />)
-  let newMessageElement = props.dialogsPage.newMessageText
 
-  let addMessage = (values) => {
+  let addMessage = (values: NewMessageFormValuesType) => {
     props.addMessage(values.newMessageText)
   }
-
-  if (!props.isAuth) return <Redirect to={'login'} />
 
   return (
     <div className={s.dialogs}>

@@ -1,7 +1,8 @@
-import ProfileReducer, { addPostCreator, deletePost } from './Profile_reducer'
+import ProfileReducer, { actions } from './Profile_reducer'
 import React from 'react';
 import { render } from '@testing-library/react';
 import profileReducer from './Profile_reducer';
+import { postType, profileType } from '../types/types';
 
 let state = {
   posts: [
@@ -11,12 +12,15 @@ let state = {
     { id: 4, message: 'Hey, how are you?Bad?', likesCount: 5 },
     { id: 5, message: 'I am good!', likesCount: 20 },
     { id: 6, message: 'Hey, I am new.', likesCount: 10 },
-  ]
+  ] as Array<postType>,
+  newPostText: '',
+  profile: null,
+  status: ''
 }
 
 test('new post should be added', () => {
   // 1. Test data
-  let action = addPostCreator('New post text')
+  let action = actions.addPostCreator('New post text')
 
   // 2. action
   let newState = profileReducer(state, action)
@@ -27,7 +31,7 @@ test('new post should be added', () => {
 
 test('new post text is correct', () => {
   // 1. Test data
-  let action = addPostCreator('Hello, this is new post text')
+  let action = actions.addPostCreator('Hello, this is new post text')
 
   // 2. action
   let newState = profileReducer(state, action)
@@ -38,7 +42,7 @@ test('new post text is correct', () => {
 
 test('decremente length of posts after deliting by 1', () => {
   // 1. Test data
-  let action = deletePost(1)
+  let action = actions.deletePost(1)
 
   // 2. action
   let newState = profileReducer(state, action)
@@ -49,7 +53,7 @@ test('decremente length of posts after deliting by 1', () => {
 
 test(`length of posts after deliting shouldn't be changed if id is wrong`, () => {
   // 1. Test data
-  let action = deletePost(1000)
+  let action = actions.deletePost(1000)
 
   // 2. action
   let newState = profileReducer(state, action)

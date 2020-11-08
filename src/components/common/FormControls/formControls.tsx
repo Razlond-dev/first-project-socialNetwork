@@ -1,7 +1,10 @@
 import React from 'react';
 import styles from './formControls.module.css';
 
-export const formControl = Element => ({ input, meta, ...props }) => {
+
+type formControlType = (params: string) => React.ReactNode
+
+export const formControl: formControlType = Element => ({ input, meta, ...props }) => {
   const hasError = meta.touched && meta.error
 
   return (
