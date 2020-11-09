@@ -5,9 +5,16 @@ import userPhoto from '../../assets/images/userPhoto.jpg'
 import { NavLink } from 'react-router-dom'
 import { usersAPI } from "../../api/usersAPI"
 import Paginatior from '../common/Paginator/Paginator'
+import { userType } from '../../types/types'
 
+type PropsType = {
+  user: userType
+  followingInProgress: Array<number>
+  follow: (userId: number) => void
+  unfollow: (userId: number) => void
+}
 
-const User = ({ user, ...props }) => {
+const User: React.FC<PropsType> = ({ user, ...props }) => {
 
   return <div>
     <span>
@@ -34,13 +41,6 @@ const User = ({ user, ...props }) => {
     </span>
   </div>
 }
-
-
-
-
-
-
-
 
 export default User
 

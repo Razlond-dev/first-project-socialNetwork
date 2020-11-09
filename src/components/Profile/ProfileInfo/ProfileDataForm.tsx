@@ -1,8 +1,13 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { profileType } from '../../../types/types';
 import s from './ProfileInfo.module.css'
 
-const ProfileDataForm = (props) => {
+type PropsType = {
+  profile?: profileType | null
+}
+
+const ProfileDataForm: React.FC<InjectedFormProps<profileType, PropsType> & PropsType> = (props) => {
   return <form onSubmit={props.handleSubmit}>
     <div>
       <button>Save</button></div>
@@ -22,7 +27,7 @@ const ProfileDataForm = (props) => {
       <b>about me:</b> <Field type="text" name={'aboutMe'} component={'textarea'} />
     </div>
     <div>
-      <b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
+      <b>Contacts:</b> {Object.keys(props.profile!.contacts).map(key => {
         return <div key={key} className={s.contact}>
           <b>{key}:</b> <Field placeholder={key} type="text" name={'contacts.' + key} component={'input'} />
         </div>
@@ -34,7 +39,7 @@ const ProfileDataForm = (props) => {
 
 
 
-const ProfileDataReduxForm = reduxForm({ form: 'editProfile' })(ProfileDataForm)
+const ProfileDataReduxForm = reduxForm<profileType, PropsType>({ form: 'editProfile' })(ProfileDataForm)
 
 
 export default ProfileDataReduxForm

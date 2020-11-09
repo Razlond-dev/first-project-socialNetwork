@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { toggleIsFetching } from '../../../redux/Users_reducer';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Preloader from '../../common/preloader/preloader';
 import s from './ProfileInfo.module.css'
 
-const ProfileStatusHook = (props) => {
+type PropsType = {
+  status: string
+  updateUserStatus: (status: string) => void
+}
+
+const ProfileStatusHook: React.FC<PropsType> = (props) => {
 
   let [editMode, setEditMode] = useState(false)
   let [status, setStatus] = useState(props.status)
@@ -19,7 +23,7 @@ const ProfileStatusHook = (props) => {
     setEditMode(false)
     props.updateUserStatus(status)
   }
-  const onStatusChange = (e) => {
+  const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value)
   }
 

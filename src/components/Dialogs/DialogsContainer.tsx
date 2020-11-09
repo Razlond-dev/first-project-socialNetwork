@@ -14,7 +14,7 @@ let mapStateToProps = (state: appStateType) => {
   }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
   connect(mapStateToProps, {
     addMessageCreator: actions.addMessageCreator
   }),

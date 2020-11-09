@@ -14,22 +14,22 @@ import UsersContainer from './components/Users/UsersContainer';
 
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/login/login';
-import { connect, Provider } from 'react-redux';
+import { connect, MapStateToProps, Provider } from 'react-redux';
 import { initialiseApp } from './redux/App_reducer'
 import { compose } from 'redux';
 import Preloader from './components/common/preloader/preloader';
-import store from './redux/redux-store';
+import store, { appStateType } from './redux/redux-store';
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+  initialiseApp: () => void
+}
 
-class App extends React.Component {
-
-
-
-
+class App extends React.Component<MapPropsType & DispatchPropsType> {
 
   componentDidMount() {
     this.props.initialiseApp()
@@ -61,8 +61,8 @@ class App extends React.Component {
           <div className='app-wrapper-content'>
             <Route exact path='/' render={() => <Redirect to='/profile' />} />
             <Route path='/login' render={() => <LoginPage />} />
-            <Route path='/profile/:userId?' render={() => <ProfileContainer store={this.props.store} />} />
-            <Route path='/dialogs' render={() => <DialogsContainer store={this.props.store} />} />
+            <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
+            <Route path='/dialogs' render={() => <DialogsContainer />} />
             <Route path='/users' render={() => <UsersContainer />} />
             <Route path='/news' render={News} />
             <Route path='/music' render={Music} />
@@ -76,16 +76,16 @@ class App extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: appStateType) => ({
   initialised: state.app.initialised
 })
 
 
-let AppContainer = compose(
+let AppContainer = compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, { initialiseApp }))(App)
 
-let MainApp = (props) => {
+let MainApp: React.FC = () => {
   return <BrowserRouter>
     <Provider store={store} >
       <AppContainer />

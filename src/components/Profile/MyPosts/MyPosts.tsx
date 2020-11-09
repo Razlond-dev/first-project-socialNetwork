@@ -1,20 +1,19 @@
 import React from 'react';
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
-import { addPostCreator, updateNewPostTextCreator } from '../../../redux/Profile_reducer'
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { maxLengthCreator, required } from '../../../utils/validation/validators';
 import { formControl } from '../../common/FormControls/formControls';
+import { postType } from '../../../types/types';
 
 const Textarea = formControl('textarea')
-const maxLength10 = maxLengthCreator(10)
 
-const MyPostsForm = (props) => {
+const MyPostsForm: React.FC<InjectedFormProps<AddPostFormValuesType, PostFormOwnProps> & PostFormOwnProps> = (props) => {
 
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field name={'newPost'} value={props.newPostText} placeholder='Post something' component={Textarea} validate={required, maxLength10} />
+        <Field name={'newPost'} value={props.newPostText} placeholder='Post something' component={Textarea} validate={required} />
       </div>
       <div>
         <button>Add Post</button>
@@ -24,16 +23,14 @@ const MyPostsForm = (props) => {
 
 }
 
-const MyPostsReduxForm = reduxForm({
+const MyPostsReduxForm = reduxForm<AddPostFormValuesType, PostFormOwnProps>({
   form: 'newPost'
 })(MyPostsForm)
 
-const MyPosts = (props) => {
-console.log('rendered');
+const MyPosts: React.FC<MapPropsType & DispatchPropsType> = (props) => {
   let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likeCount={p.likesCount} />)
 
-  let onAddPost = (values) => {
-    console.log(values);
+  let onAddPost = (values: AddPostFormValuesType) => {
     props.addPost(values.newPost)
   }
 
@@ -49,3 +46,18 @@ console.log('rendered');
 }
 
 export default MyPosts
+
+// types
+export type MapPropsType = {
+  posts: Array<postType>
+
+}
+export type DispatchPropsType = {
+  addPost: (newPostText: string) => void
+}
+type AddPostFormValuesType = {
+  newPost: string
+}
+type PostFormOwnProps = {
+  newPostText?: string
+}

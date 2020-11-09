@@ -9,24 +9,7 @@ import { userType } from '../../types/types'
 import { appStateType } from '../../redux/redux-store'
 
 
-type ownPropsType = {}
 
-type mapStatePropsType = {
-  currentPage: number
-  pageSize: number
-  totalUsersCount: number
-  users: Array<userType>
-  isFetching: boolean
-  followingInProgress: Array<number>
-}
-
-type mapDispatchPropsType = {
-  getUsers: (currentPage: number, pageSize: number) => void
-  follow: (userId: number) => void
-  unfollow: (userId: number) => void
-}
-
-type propsType = mapStatePropsType & mapDispatchPropsType
 
 class UsersContainer extends React.Component<propsType> {
 
@@ -78,3 +61,22 @@ export default compose(
   // @ts-ignore
 )(UsersContainer)
 
+// types
+type ownPropsType = {}
+
+type mapStatePropsType = {
+  currentPage: number
+  pageSize: number
+  totalUsersCount: number
+  users: Array<userType>
+  isFetching: boolean
+  followingInProgress: Array<number>
+}
+
+type mapDispatchPropsType = {
+  getUsers: (currentPage: number, pageSize: number) => void
+  follow: (userId: number) => void
+  unfollow: (userId: number) => void
+}
+
+type propsType = mapStatePropsType & mapDispatchPropsType

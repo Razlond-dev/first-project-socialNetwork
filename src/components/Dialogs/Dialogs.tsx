@@ -9,7 +9,6 @@ import s from './Dialogs.module.css'
 import Message from './Message/Message'
 
 const Textarea = formControl('textarea')
-const maxLength200 = maxLengthCreator(200)
 
 const addMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType, NewMessageFormOwnProps> & NewMessageFormOwnProps> = (props) => {
   return (<form onSubmit={props.handleSubmit}>
@@ -22,16 +21,7 @@ const AddMessageFormRedux = reduxForm<NewMessageFormValuesType, NewMessageFormOw
   form: 'dialogsAddMessageForm'
 })(addMessageForm)
 
-type NewMessageFormValuesType = {
-  newMessageText: string
-}
 
-type NewMessageFormOwnProps = {}
-
-type OwnPropsType = {
-  dialogsPage: initialStateType
-  addMessage: (newMessageText: string) => void
-}
 
 const Dialogs: React.FC<OwnPropsType> = (props) => {
 
@@ -39,7 +29,7 @@ const Dialogs: React.FC<OwnPropsType> = (props) => {
   let messagesElements = props.dialogsPage.messages.map(mes => <Message message={mes.message} key={mes.id} />)
 
   let addMessage = (values: NewMessageFormValuesType) => {
-    props.addMessage(values.newMessageText)
+    props.addMessageCreator(values.newMessageText)
   }
 
   return (
@@ -58,3 +48,13 @@ const Dialogs: React.FC<OwnPropsType> = (props) => {
 }
 
 export default Dialogs
+
+// types
+type OwnPropsType = {
+  dialogsPage: initialStateType
+  addMessageCreator: (newMessageText: string) => void
+}
+type NewMessageFormValuesType = {
+  newMessageText: string
+}
+type NewMessageFormOwnProps = {}
