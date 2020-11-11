@@ -1,24 +1,18 @@
 import React, { Suspense } from 'react';
 import './App.css';
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
 import { BrowserRouter, Redirect, Route, withRouter } from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
-
-import Users from './components/Users/Users';
-import UsersContainer from './components/Users/UsersContainer';
-
 import HeaderContainer from './components/Header/HeaderContainer';
-import LoginPage from './components/login/login';
-import { connect, MapStateToProps, Provider } from 'react-redux';
+import { LoginPage } from './components/login/login';
+import { connect, Provider } from 'react-redux';
 import { initialiseApp } from './redux/App_reducer'
 import { compose } from 'redux';
 import Preloader from './components/common/preloader/preloader';
 import store, { appStateType } from './redux/redux-store';
+import { UsersPage } from './components/Users/UsersContainer';
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -45,7 +39,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
       return false;
     })
   }
-  
+
   render() {
 
     if (!this.props.initialised) {
@@ -63,7 +57,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
             <Route path='/login' render={() => <LoginPage />} />
             <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
             <Route path='/dialogs' render={() => <DialogsContainer />} />
-            <Route path='/users' render={() => <UsersContainer />} />
+            <Route path='/users' render={() => <UsersPage pageTitle={'Users'} />} />
             <Route path='/news' render={News} />
             <Route path='/music' render={Music} />
             <Route path='/settings' render={Settings} />

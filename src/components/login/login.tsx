@@ -1,12 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
-import { authAPI } from "../../api/authAPI"
 import { required } from '../../utils/validation/validators'
 import { formControl } from '../common/FormControls/formControls'
 import { loginThunkCreator } from '../../redux/Auth_reducer'
 import { Redirect } from 'react-router-dom'
-import style from '../../components/common/FormControls/formControls.module.css'
 import { appStateType } from '../../redux/redux-store'
 
 
@@ -48,46 +46,32 @@ const LoginReduxForm = reduxForm<loginFormValuesType, loginFormOwnProps>({
 })(LoginForm)
 
 
+export const LoginPage: React.FC = () => {
+  const dispatch = useDispatch()
 
-const Login: React.FC<mapStatePropsType & mapDispatchPropsType> = (props) => {
-
-  if (props.isAuth) {
+  const captchaUrl = useSelector( (state: appStateType) => state.auth.captchaUrl )
+  const isAuth = useSelector( (state: appStateType) => state.auth.isAuth )
+  
+  if (isAuth) {
     return <Redirect to={'/profile'} />
   }
 
   const onSubmit = (formData: loginFormValuesType) => {
-    props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha)
+    dispatch(loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha))
   }
 
   return (
     <div>
       <h1>Login</h1>
-      <LoginReduxForm captchaUrl={props.captchaUrl} onSubmit={onSubmit} />
+      <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit} />
     </div>
   )
 }
-
-const mapStateToProps = (state: appStateType): mapStatePropsType => {
-  return {
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl
-  }
-
-}
-
-export default connect(mapStateToProps, { loginThunkCreator })(Login)
 
 
 // types
 type loginFormOwnProps = {
   captchaUrl: string | null
-}
-type mapStatePropsType = {
-  captchaUrl: string | null
-  isAuth: boolean
-}
-type mapDispatchPropsType = {
-  loginThunkCreator: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
 type loginFormValuesType = {
   email: string

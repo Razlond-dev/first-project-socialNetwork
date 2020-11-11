@@ -84,7 +84,7 @@ export const getUsers = (currentPage: number, pageSize: number, filter: FilterTy
   async (dispatch) => {
 
     dispatch(actions.toggleIsFetching(true))
-    // dispatch(actions.setCurrentPage(pageSize))
+    dispatch(actions.setCurrentPage(currentPage))
     dispatch(actions.setFilter(filter))
 
     let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
