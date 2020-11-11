@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 type propsType = {
   totalUsersCount: number
   pageSize: number
-  onPageChanged: ((pageNumber: number) => void)
+  onPageChanged: ((pageNumber: { selected: number }) => void)
   currentPage: number
 }
 
@@ -31,6 +31,7 @@ const Paginatior: React.FC<propsType> = (props) => {
       // @ts-ignore
       onPageChange={props.onPageChanged}
       containerClassName={'paginationUsers'}
+      // @ts-ignore
       subContainerClassName={'pages pagination'}
       activeClassName={'active'}
       disabledClassName={'hidden'}
