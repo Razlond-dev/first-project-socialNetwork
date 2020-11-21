@@ -23,11 +23,15 @@ beforeEach(() => {
         photos: { small: null, large: null }, status: 'hello 3'
       }
     ],
+    filter: {
+      term: '',
+      friend: null as null | boolean
+    },
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followinInProgress: [] // array of users ids
+    followinInProgress: [], // array of users ids
   }
 })
 
@@ -37,7 +41,7 @@ test('follow success', () => {
 
   expect(newState.users[0].followed).toBeFalsy()
   expect(newState.users[1].followed).toBeTruthy()
-}) 
+})
 test('unfollow success', () => {
   const newState = usersReducer(state, actions.unfollowSuccess(3))
 

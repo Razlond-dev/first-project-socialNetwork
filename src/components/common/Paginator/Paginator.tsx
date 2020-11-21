@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate';
-
+import { Pagination } from 'antd';
 
 type propsType = {
   totalUsersCount: number
   pageSize: number
-  onPageChanged: ((pageNumber: { selected: number }) => void)
+  onPageChanged: ((page: number, pageSize?: number) => void)
   currentPage: number
 }
 
@@ -20,7 +20,13 @@ const Paginatior: React.FC<propsType> = (props) => {
 
   return (<div>
 
-    <ReactPaginate
+    <>
+      <Pagination showQuickJumper defaultCurrent={1} total={props.totalUsersCount} onChange={props.onPageChanged} />
+      <br />
+      <Pagination showQuickJumper defaultCurrent={1} total={props.totalUsersCount} onChange={props.onPageChanged} />
+    </>
+
+    {/* <ReactPaginate
       previousLabel={'Previous page'}
       nextLabel={'Next page'}
       breakLabel={'...'}
@@ -38,7 +44,7 @@ const Paginatior: React.FC<propsType> = (props) => {
       nextLinkClassName={'btn'}
       previousLinkClassName={'btn'}
       pageClassName={'pages'}
-    />
+    /> */}
 
   </div>
   )

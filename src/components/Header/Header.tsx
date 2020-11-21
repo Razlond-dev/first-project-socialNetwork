@@ -1,27 +1,47 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import s from './Header.module.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { SelectCurrentUserLogin, SelectIsAuth } from './../../redux/Auth_selectors';
+import { logoutThunkCreator } from '../../redux/Auth_reducer';
+import { Button, Col, Layout, Row } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import Avatar from 'antd/lib/avatar/avatar';
 
-export type MapPropsType = {
-  isAuth: boolean
-  login: string | null
+export type MapPropsType = {}
+
+
+export const Header: React.FC<MapPropsType> = () => {
+
+  const { Header } = Layout;
+
+  const isAuth = useSelector(SelectIsAuth)
+  const login = useSelector(SelectCurrentUserLogin)
+
+  const dispatch = useDispatch()
+
+  const logoutCallback = () => {
+    dispatch(logoutThunkCreator())
+  }
+  return (<Header className="site-layout-sub-header-background" style={{ padding: 0 }}>
+    <Row>
+      <Col span={19}></Col>
+      {isAuth
+        ? <>
+          <Col span={1}>
+            <Link to='/profile'><Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} /></Link>
+          </Col>
+          <Col span={4}>
+            <div style={{ color: '#fff' }}>{login} <Button style={{ marginLeft: 10 }} onClick={logoutCallback}>Log out</Button> </div>
+          </Col>
+        </>
+        : <Col span={5}>
+          <div><Button style={{ marginRight: 15 }}><Link to='/login'>Login</Link></Button>
+            <Button><a target="_blank" href="https://social-network.samuraijs.com/signUp">Create an account</a></Button>
+          </div>
+        </Col>}
+
+    </Row>
+  </Header >
+  )
 }
-export type DispatchPropsType = {
-  logoutThunkCreator: () => void
-
-}
-
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-  return <header className={s.header}>
-    <img src="https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg" alt="logo" />
-    <div className={s.loginBlock}>
-      {props.isAuth
-        ? <div>{props.login} - <button onClick={props.logoutThunkCreator}>Log out</button> </div>
-        : <NavLink to='/login'>Login</NavLink>}
-
-    </div>
-  </header>
-
-}
-
-export default Header

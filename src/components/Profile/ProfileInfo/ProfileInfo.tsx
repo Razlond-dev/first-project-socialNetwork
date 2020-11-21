@@ -6,15 +6,9 @@ import userPhoto from '../../../assets/images/userPhoto.jpg'
 import ProfileDataForm from './ProfileDataForm';
 import { profileType } from '../../../types/types';
 import { savePhoto } from './../../../redux/Profile_reducer';
+import { Input, Button } from 'antd';
 
-type PropsType = {
-  profile: profileType | null
-  status: string
-  isOwner: boolean
-  savePhoto: (file: File) => void
-  saveProfile: (profile: profileType) => Promise<any>
-  updateUserStatus: (status: string) => void
-}
+
 
 const ProfileInfo: React.FC<PropsType> = (props) => {
 
@@ -39,10 +33,14 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
   }
 
-  return <div>
-    <div className={s.descriptionBlock}>
-      <img src={props.profile.photos.large || userPhoto} className={s.mainPhoto} alt="avatar" />
-      {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected} />}
+  return <div style={{ padding: 50, width: 900 }}>
+    <div className={s.descriptionBlock} style={{ display: "flex", justifyContent: "space-between" }}>
+      <div>
+        <img style={{ marginBottom: 10 }} src={props.profile.photos.large || userPhoto} className={s.mainPhoto} alt="avatar" />
+        {props.isOwner && <input style={{ marginBottom: 20 }} type={'file'} onChange={onMainPhotoSelected} />}
+        <ProfileStatusHook status={props.status} updateUserStatus={props.updateUserStatus} />
+      </div>
+
 
       {
         editMode
@@ -50,21 +48,15 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
           : <ProfileData profile={props.profile} goToEditMode={() => { setEditMode(true) }} isOwner={props.isOwner} />
       }
 
-      <ProfileStatusHook status={props.status} updateUserStatus={props.updateUserStatus} />
     </div>
 
   </div>
 }
 
-type ProfileDataPropsType = {
-  profile: profileType
-  isOwner: boolean
-  goToEditMode: () => void
-}
+
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({ profile, isOwner, goToEditMode }) => {
-  return <div>
-    {isOwner && <div><button onClick={goToEditMode}>Edit</button></div>}
+  return <div style={{ fontSize: 16 }}>
     <div>
       <b>Looking for a job:</b> {profile.lookingForAJob ? 'Yes' : 'No'}
     </div>
@@ -84,13 +76,10 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({ profile, isOwner, goToEdi
         return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]} />
       })}
     </div>
+    {isOwner && <div><Button onClick={goToEditMode}>Edit</Button></div>}
   </div>
 }
 
-type ContactsPropsType = {
-  contactTitle: string
-  contactValue: string
-}
 
 const Contact: React.FC<ContactsPropsType> = ({ contactTitle, contactValue }) => {
   return <div className={s.contact}><b>{contactTitle}:</b>{contactValue}</div>
@@ -100,3 +89,22 @@ const Contact: React.FC<ContactsPropsType> = ({ contactTitle, contactValue }) =>
 
 
 export default ProfileInfo
+
+// types
+type ProfileDataPropsType = {
+  profile: profileType
+  isOwner: boolean
+  goToEditMode: () => void
+}
+type ContactsPropsType = {
+  contactTitle: string
+  contactValue: string
+}
+type PropsType = {
+  profile: profileType | null
+  status: string
+  isOwner: boolean
+  savePhoto: (file: File) => void
+  saveProfile: (profile: profileType) => Promise<any>
+  updateUserStatus: (status: string) => void
+}

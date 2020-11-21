@@ -11,11 +11,8 @@ let initialState = {
   ] as Array<dialogType>,
   messages: [
     { id: 1, message: 'Hey, how are you?' },
-    { id: 2, message: 'You' },
-    { id: 3, message: 'Hey, how are you?Good?' },
-    { id: 4, message: 'Hey, how are you?Bad?' },
-    { id: 5, message: 'I am good!' },
-    { id: 6, message: 'Hey, I am new.' },
+    { id: 2, message: 'Good, how are you?' },
+    { id: 3, message: 'Unfortunately chatting is not available yet. Will be released in the future with socket.io' },
   ] as Array<messageType>
 }
 

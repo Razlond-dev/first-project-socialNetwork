@@ -21,21 +21,21 @@ beforeEach(() => {
   userAPIMock.follow.mockClear()
   userAPIMock.unfollow.mockClear()
 })
-test('follow thunk success', async() => {
+test('follow thunk success', async () => {
   const thunk = follow(1)
-  
-  await thunk(dispatchMock, getStateMock, {})
 
+  await thunk(dispatchMock, getStateMock, {})
+  debugger
   expect(dispatchMock).toBeCalledTimes(3)
   expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.toggleIsFollowingProgress(true, 1))
   expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.followSuccess(1))
   expect(dispatchMock).toHaveBeenNthCalledWith(3, actions.toggleIsFollowingProgress(false, 1))
 })
 
-test('unfollow thunk success', async() => {
+test('unfollow thunk success', async () => {
   const thunk = unfollow(1)
 
-  
+
   await thunk(dispatchMock, getStateMock, {})
 
   expect(dispatchMock).toBeCalledTimes(3)

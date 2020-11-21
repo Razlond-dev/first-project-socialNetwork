@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from './Post.module.css'
-
+import postPhoto from '../../../../assets/images/userPhoto.png'
+import { Button } from 'antd';
+import { LikeOutlined } from '@ant-design/icons';
 type PropsType = {
   message: string
   likeCount: number
 }
 
 const Post: React.FC<PropsType> = (props) => {
+  let [likeCount, setLikeCount] = useState(props.likeCount)
+
+  const like = () => {
+    setLikeCount(props.likeCount + 1)
+  }
+
   return (
     <div className={`${s.item} ${s.active}`}>
-      <img src="https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg" alt="" />
+      <img style={{ padding: 10 }} src={postPhoto} alt="post" />
       {props.message}
       <div>
-        <button>Like</button> {props.likeCount}
+        <Button onClick={like}><LikeOutlined />Like</Button> {likeCount}
       </div>
-    </div>
+    </div >
   )
 }
 

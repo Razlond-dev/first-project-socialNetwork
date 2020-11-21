@@ -7,11 +7,8 @@ import { BaseThunkType, inferActionsTypes } from "./redux-store"
 let initialState = {
   posts: [
     { id: 1, message: 'Hey, how are you?', likesCount: 9 },
-    { id: 2, message: 'You are the best!', likesCount: 240 },
-    { id: 3, message: 'Hey, how are you?Good?', likesCount: 1 },
-    { id: 4, message: 'Hey, how are you?Bad?', likesCount: 5 },
-    { id: 5, message: 'I am good!', likesCount: 20 },
-    { id: 6, message: 'Hey, I am new.', likesCount: 10 },
+    { id: 2, message: 'You are the best!', likesCount: 140 },
+    { id: 3, message: "Right now, adding posts to the specific profile aren't available yet and the current posts are hardcoded :(", likesCount: 1 },
   ] as Array<postType>,
   newPostText: '',
   profile: null as profileType | null,

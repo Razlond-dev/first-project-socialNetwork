@@ -68,9 +68,9 @@ export const usersReducer = (state = initialState, action: ActionsType): Initial
 export const actions = {
   followSuccess: (userId: number) => ({ type: 'FOLLOW', userId } as const),
   unfollowSuccess: (userId: number) => ({ type: 'UNFOLLOW', userId } as const),
-  setUsers: (users: Array<userType>)=> ({ type: 'SET_USERS', users } as const),
-  setCurrentPage: (currentPage: number)=> ({ type: 'SET_CURRENT_PAGE', currentPage } as const),
-  setFilter: (filter: FilterType ) => ({ type: 'SET_FILTER', payload: filter } as const),
+  setUsers: (users: Array<userType>) => ({ type: 'SET_USERS', users } as const),
+  setCurrentPage: (currentPage: number) => ({ type: 'SET_CURRENT_PAGE', currentPage } as const),
+  setFilter: (filter: FilterType) => ({ type: 'SET_FILTER', payload: filter } as const),
   setTotalUsersCount: (totalCount: number) => ({ type: 'SET_TOTAL_USERS_COUNT', count: totalCount } as const),
   toggleIsFetching: (isFetching: boolean) => ({ type: 'TOGGLE_IS_FETCHING', isFetching } as const),
   toggleIsFollowingProgress: (isFetching: boolean, userId: number) => ({ type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId } as const)

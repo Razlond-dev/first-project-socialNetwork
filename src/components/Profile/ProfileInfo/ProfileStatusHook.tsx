@@ -34,7 +34,7 @@ const ProfileStatusHook: React.FC<PropsType> = (props) => {
         <input onChange={onStatusChange} onBlur={deActivateEditMode} type="text" value={status} autoFocus={true} />
       </div>
       : <div>
-        <span onClick={activateEditMode}><b>Status: </b>{props.status || 'status is empty'}</span>
+        <span style={{fontSize: 18}} onClick={activateEditMode}><b>Status: </b>{props.status || 'status is empty'}</span>
       </div>
     }
 

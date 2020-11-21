@@ -1,3 +1,5 @@
+import { Button } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
@@ -12,8 +14,8 @@ const Textarea = formControl('textarea')
 
 const addMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType, NewMessageFormOwnProps> & NewMessageFormOwnProps> = (props) => {
   return (<form onSubmit={props.handleSubmit}>
-    <Field component={Textarea} validate={required} name={'newMessageText'} placeholder='Send message' />
-    <button>Add message</button>
+    <Field style={{ color: '#000' }} component={Textarea} validate={required} name={'newMessageText'} placeholder='Send message' />
+    <Button onClick={props.handleSubmit}>Add message</Button>
   </form>)
 }
 
@@ -34,7 +36,7 @@ const Dialogs: React.FC<OwnPropsType> = (props) => {
 
   return (
     <div className={s.dialogs}>
-      <div className={s.dialogsItems}>
+      <div className={s.dialogsItems} style={{ color: 'black' }}>
         {dialogsElements}
       </div>
 

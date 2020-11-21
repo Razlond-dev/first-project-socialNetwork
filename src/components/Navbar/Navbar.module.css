@@ -14,10 +14,3 @@ ul li {
   margin-bottom: 5px;
 }
 
-.item a{
-  color: white;
-}
-
-.item a.activeLink {
-  color: gold;
-}

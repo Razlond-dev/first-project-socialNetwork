@@ -3,6 +3,9 @@ import React from 'react';
 import { FilterType } from '../../redux/Users_reducer';
 import { useSelector } from 'react-redux';
 import { getUsersFilter } from './../../redux/Users_selectors';
+import {
+  SearchOutlined
+} from '@ant-design/icons';
 
 const userSearchFormValidate = (values) => {
   const errors = {};
@@ -24,6 +27,7 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
   const filter = useSelector(getUsersFilter)
 
   const submit = (values: FormType, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+
     const filter: FilterType = {
       term: values.term,
       friend: values.friend === 'null' ? null : values.friend === 'true' ? true : false
@@ -41,16 +45,16 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
         validate={userSearchFormValidate}
         onSubmit={submit}
       >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="term" />
-            <Field name="friend" as="select">
+        {({ values, isSubmitting }) => (
+          <Form style={{ display: "flex", flexDirection: "column" }}>
+            <Field title={'Search by username'} type="text" name="term" style={{ margin: 10 }} />
+            <Field name="friend" as="select" style={{ margin: 10 }}>
               <option value="null">All</option>
               <option value="true">Only followed</option>
               <option value="false">Only unfollowed</option>
-            </Field>
+            </Field >
             <button type="submit" disabled={isSubmitting}>
-              Find
+              <SearchOutlined /> Find
            </button>
           </Form>
         )}
